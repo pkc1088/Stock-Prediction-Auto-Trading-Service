@@ -8,12 +8,20 @@ import os
 import tensorflow as tf
 from datetime import timedelta
 
+
 def lstm_model(target_date, ticker, df):
     try:
         target_date = pd.to_datetime(target_date)
 
-        model_path = os.path.join('LSTM_MODEL_H5_WIN', f'{ticker}.h5')
-        scaler_path = os.path.join('LSTM_MODEL_H5_WIN', f'{ticker}_scaler.joblib')
+                
+        # 현재 파일 기준 루트 경로를 계산
+        ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # LSTM 모델과 스케일러 경로
+        MODEL_DIR = os.path.join(ROOT_DIR, 'model', 'LSTM_MODEL_H5_WIN')
+        model_path = os.path.join(MODEL_DIR, f'{ticker}.h5')
+        scaler_path = os.path.join(MODEL_DIR, f'{ticker}_scaler.joblib')
+        # model_path = os.path.join('../model/LSTM_MODEL_H5_WIN', f'{ticker}.h5')
+        # scaler_path = os.path.join('../model/LSTM_MODEL_H5_WIN', f'{ticker}_scaler.joblib')
 
         if not os.path.exists(model_path) or not os.path.exists(scaler_path):
             print(f"{ticker}의 모델 또는 스케일러 파일이 없습니다.")

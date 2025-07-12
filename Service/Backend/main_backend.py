@@ -14,9 +14,9 @@ from pydantic import BaseModel
 import yfinance as yf
 from datetime import datetime, timedelta
 import pandas as pd
-from CNN_PY import cnn_model
-from LSTM_PY import lstm_model
-from auto_trade import auto_trade, get_access_token, get_current_price, get_stock_balance, make_price_point, make_holding
+from cnn.CNN_PY import cnn_model
+from lstm.LSTM_PY import lstm_model
+from service.backend.auto_trade import auto_trade, get_access_token, get_current_price, get_stock_balance, make_price_point, make_holding
 import os
 from typing import List
 import tensorflow as tf, joblib, numpy as np
@@ -449,9 +449,9 @@ def mlp_price(symbol: str, target_date: str) -> float:
     df.dropna(subset=['Open', 'High', 'Low', 'Close', 'Volume'], inplace=True)
 
     # 2. 모델 및 스케일러 불러오기
-    model = tf.keras.models.load_model('MLP_model_3.h5', compile=False)
-    X_scaler = joblib.load('MLP_X_scaler_3.joblib')
-    y_scaler = joblib.load('MLP_y_scaler_3.joblib')
+    model = tf.keras.models.load_model('../../model/MLP_model_3.h5', compile=False)
+    X_scaler = joblib.load('../../model/MLP_X_scaler_3.joblib')
+    y_scaler = joblib.load('../../model/MLP_y_scaler_3.joblib')
 
     # 3. LSTM, CNN 모델로부터 예측값 얻기
     Close = lstm_model(target_date, symbol, df)
@@ -478,20 +478,3 @@ def mlp_price(symbol: str, target_date: str) -> float:
 
 # -----------------------------
 # uvicorn main:app --reload  로 실행
-
-        
-        # holdings_list_for_response = [{'name':'Amazon', 'symbol':'AMZN', 'quantity':100, 'avgPrice':200}]
-        # # for symbol, data in holdings_dict.items():
-        # #     try:
-        # #         holdings_list_for_response.append(HoldingItemResponse(
-        # #             name='Apple', #data['name'],
-        # #             symbol='AAPL', #data['symbol'],
-        # #             quantity=data['quantity'],
-        # #             avgPrice=data['avgPrice']
-        # #         ))
-        # #     except Exception as e:
-        # #         # 개별 주식 항목 파싱 중 오류 발생 시 로깅 또는 처리
-        # #         print(f"Error parsing holding item for symbol {symbol}: {e}")
-        # #         # 오류가 발생한 항목은 건너뛰고 나머지 정상 항목만 포함
-        # #         continue
-        # return HoldingsResponse(holdings=holdings_list_for_response)
