@@ -2,8 +2,8 @@
 
 본 프로젝트는 이미지, 시계열, 텍스트 데이터를 통합하여 **종목별 주가를 예측**하는 멀티모달 예측 시스템이다.<br>
 단일 모달 한계를 극복하고, 다양한 데이터의 조합을 통해 정확도 높은 주가 예측 및 자동 매매을 목표로 한다.
-
 <br><br>
+![졸업과제 포스터](https://github.com/user-attachments/assets/e01ed946-003e-4b98-b973-56721fe652fb)
 
 ---
 
@@ -127,7 +127,7 @@
 
 <br><br>
   > Q. 왜 LSTM?  
-  > → 과거 패턴 → 미래 영향 강함, 장기 의존성 처리 특화<br><br>
+  > → 과거 패턴 → 미래 영향 강함, 장기 의존성 처리 특화
 <br><br>  
 ---
 
@@ -151,41 +151,36 @@
   > Q. 왜 Late Fusion?  
   > → 이질적인 모달리티인 이미지/시계열 데이터 통합의 최적 구조 
 <br><br>
+
 ---
 
 ### 4️⃣ TEXT (뉴스 감정분석)
 
-- 조건: 무료, 본문 제공, 종목별 수집 가능<br><br>
-- API 활용:
-  - `NewsAPI`: CNN/CBS/BBC 필터링 후 본문 크롤링
-  - `Yahoo Finance`: 종목별 실시간 뉴스 동적 크롤링<br><br>
+- **조건**: 무료, 본문 제공, 종목별 수집 가능 →  **모두 만족하는 서비스 전무**<br><br>
+- 뉴스 본문 확보:
+  - `NewsAPI`: CNN/CBS/BBC 필터링 해 뉴스 링크 확보 → 도메인별 전용 크롤러 구축 →  본문 크롤링
+  - 비교적 덜 유명한 종목: 제공 받을 수 있는 링크 자체가 한정적
+  - `Yahoo Finance News`: 종목별 실시간 뉴스 제공 섹션 동적 접근 → Yahoo 전용 크롤러 구축 →  본문 크롤링<br><br>
 - 감정 분석:
   - **Gemini 1.5 Flash**: LLM 기반 감정 점수 추출
-  - **Marketaux API**: -1 ~ 1 범위 감성 점수 확보<br><br>
-- NewsAPI (CNN, CBS, BBC) + Yahoo Finance 크롤링
-- 도메인 전용 크롤러 직접 제작
-- Gemini Flash LLM → 뉴스 본문 감정 점수화
-- Marketaux API 감정 점수 결합 → 다양성 확보
-  
+  - **Marketaux API**: -1 ~ 1 범위 감성 점수 확보
+
+<br><br>  
   > Q. 왜 Gemini Flash?  
   > → 빠른 응답, 문맥 이해 높음, 금융·기술 분야 범용성 ↑
-
+<br><br>
 ---
 
-## ⚙️ Backend
+### 5️⃣ Backend
 
 - FastAPI + Uvicorn + ngrok
-- 종목 요청 → 50일치 데이터 → LSTM + CNN 실행 → MLP 입력
-- MLP 예측가 산출
+- 종목 요청 → 과거 데이터 수집 → LSTM + CNN 실행 → MLP 입력 → 최종 예측가 산출 
 - 뉴스 크롤링 → Gemini 분석 → 감정 점수 반환
-- 한국투자 API → 자동매매 연계
-
-> Q. 자동매매?  
-> → 멀티스레딩으로 주문 실행
+- 한국투자 API → 멀티스레딩 방식의 자동매매 연계
 
 ---
 
-## 📱 Frontend (iOS)
+### 6️⃣ Frontend (iOS)
 
 - Swift 기반 앱
 - 홈: 보유 종목, 수량, 매수가 자동 조회
@@ -196,35 +191,26 @@
 
 ---
 
-
-## 🔧 주요 기술 스택
-
-| 모달리티 | 활용 방식 |
-|----------|------------|
-| 시계열 (Time Series) | LSTM으로 50일치 주가 흐름을 입력, 다음날 종가 예측 |
-| 이미지 (Candlestick Chart) | CNN으로 20일치 차트 이미지 분석, 상승/하락 판단 |
-| 텍스트 (뉴스 기사) | LLM 기반 감정 분석 (Gemini 1.5, Marketaux API 활용) |
-
-- **백엔드**: FastAPI + Uvicorn + Ngrok
-- **모델 통합**: MLP로 Late Fusion 수행
-- **자동 매매 연동**: 한국투자증권 Open API 사용 (멀티스레딩)
-
----
-
-
-## ✅ 주요 결과 요약
+## 📊 주요 결과 요약
 
 | 모델 유형         | 평가 지표     | 성능         |
 |------------------|---------------|--------------|
-| 단일 LSTM        | sMAPE 평균    | **3.92%**    |
-| 멀티모달 MLP     | sMAPE 평균    | **2.04%**    |
+| LSTM        | sMAPE 종목 평균    | **3.92%**    |
+| CNN  | 정확도 / AUC | 81.4% / 0.83  |
+| 멀티모달 MLP     | sMAPE     | **2.54%**    |
 
+- 결과<br><br>
+<img width="343" height="326" alt="image" src="https://github.com/user-attachments/assets/108ec663-f5c1-4706-8bd7-fe37c5e4c75c" /><br><br>
+ - 각 단일 모델도 신뢰할만한 지표를 가지도록 설계
+ - 더불어 멀티모달 모델로 결합될 때 예측의 정확도와 신뢰도가 유의미하게 상승
+ - 향후 상용화된 투자 지원 시스템으로 발전시킬 수 있는 기반 확보 
 
-| 모델 | 성능 |
-|------|------|
-| CNN  | Val 83% / Test 81% / AUC 0.83 |
-| LSTM | sMAPE 평균 3.9% |
-| MLP  | sMAPE 2.04%, R² 0.996 |
+---
+
+## ✅ 주요 기능
+
+<img width="716" height="1022" alt="image" src="https://github.com/user-attachments/assets/8eb29c67-a52d-49a0-853e-14df04727166" /><br><br>
+
 
 
 
