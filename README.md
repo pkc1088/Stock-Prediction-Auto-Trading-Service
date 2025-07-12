@@ -116,6 +116,11 @@
   > Q. 이미지 크기 왜 224x224?  
   > → 딥러닝 표준, 정보손실 최소화, 연산 효율성 균형
 
+- 결과 <br><br>
+  <img width="603" height="321" alt="image" src="https://github.com/user-attachments/assets/668fff58-7edc-43cf-9038-9730941b37ca" />
+
+  - rkskek 
+
 ---
 
 ### 2️⃣ LSTM ((Time Series))
@@ -162,6 +167,12 @@
   > Q. 왜 Late Fusion?  
   > → 이미지/시계열/수치 데이터 통합 최적 구조
 
+- 결과 <br><br>
+  <img width="603" height="321" alt="image" src="https://github.com/user-attachments/assets/668fff58-7edc-43cf-9038-9730941b37ca" />
+
+  - rkskek
+ 
+ 
 ---
 
 ### 4️⃣ TEXT (뉴스 감정분석)
@@ -226,6 +237,7 @@
 
 ## 🔁 전체 데이터 흐름 (DFD)
 
+<img width="2008" height="1005" alt="image" src="https://github.com/user-attachments/assets/4e880d0c-c2b9-4f6a-9cf8-1ccac4f06c1a" />
 
 
 ## ✅ 주요 결과 요약
