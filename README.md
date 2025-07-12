@@ -3,53 +3,56 @@
 본 프로젝트는 이미지, 시계열, 텍스트 데이터를 통합하여 **종목별 주가를 예측**하는 멀티모달 예측 시스템이다.<br>
 단일 모달 한계를 극복하고, 다양한 데이터의 조합을 통해 정확도 높은 주가 예측 및 자동 매매을 목표로 한다.
 
+<br><br>
+
 ---
 
 ## 🧠 프로젝트 개요
 
 - **프로젝트명**: 멀티모달 데이터마이닝 기반 주가 예측
-- **모델 구조**: CNN(이미지) + LSTM(시계열) → MLP(Late Fusion) & LLM(텍스트)
-- **예측 대상**: 미국 S&P 500 종목 주가
-- **학습 데이터 규모**: 약 10년간 일봉 기준 데이터(120만건) + 이미지(약 10만장) + 자체 수집한 MLP 데이터셋(10만건) + 뉴스 본문
+- **시연 영상**: CNN(이미지) + LSTM(시계열) + LLM(텍스트) → MLP(Late Fusion)
+- **학습 데이터 규모**
+    - 약 10년간 일봉 기준 데이터(120만건)
+    - 이미지(약 10만장) 
+    - 자체 수집한 MLP 데이터셋(10만건)
+    - 뉴스 본문
 <br><br>
 
 ### 🛠️ 기술 스택
 
-- Python, TensorFlow, Keras, ta-lib, yfinance
-- FastAPI, Uvicorn, ngrok
-- Gemini Flash, Marketaux, 한국투자 API
-- Swift (iOS)
+- **Language**: Python
+- **Model**: TensorFlow, Keras, h5 
+- **Network**: FastAPI, Uvicorn, ngrok
+- **APIs**: yfinance, Gemini Flash, NewsAPI, Marketaux, 한국투자 API
+- **Front-end**: Swift (iOS)
 <br><br>
 
-### 프로젝트 멤버 이름 및 멤버 별 담당 파트
+### 🧑‍🤝‍🧑 프로젝트 멤버 이름 및 멤버 별 담당 파트
  
-| 이름   | 담당 파트 및 주요 역할 |
-|--------|--------------------------|
-| 편경찬 | JMeter 부하 테스트 환경 구축<br> Spring Filter/Interceptor 이용한 접속자 쿠키 발급 |
-| 정다원 | AWS 기반 인프라 구성: VPC, 퍼블릭 서브넷, 라우팅 테이블, IGW, 보안 그룹 설정<br>  |
-| 하종석 | Spring MVC 기반 티켓팅 서비스 구현<br> 쿠키 기반 로그인 세션 관리 및 인증 로직 개발<br>  |
+| 이름    | 담당 파트 및 주요 역할 |
+|---------|--------------------------|
+| 편경찬  | LSTM 모델 설계 및 구현, MLP 데이터셋 생성, MLP 모델 설계 및 구현, 뉴스 크롤링, LLM 모델 통한 텍스트 감정분석, Fast API 이용한 메인 백엔드 구축<br>  |
+| 정다원  | 캔들 스틱 차트 이미지 데이터 확보 및 분석, CNN 이미지 모델 설계 및 구현, 한국투자증권 API 기반 자동매매 프로그램 구현<br>  |
+| 하종석  | 프론트 UI/UX 설계 및 구현, TCA기반 네비게이션 설계 및 구현|
 
----
+<br><br>
 
-## 🔍 문제 정의
+### 🔍 문제 정의
 
 - 금융시장 변동성 ↑
 - 단일 모달(가격만) 예측 → 한계
 - 실제 주가: 기술적 패턴 + 뉴스 심리 + 외부 변수 동시 작용
 - 기존 LSTM 단일모델 → 정확도 한계
-- Softmax 대신 Sigmoid 사용 → 이진 분류(상승/하락)
+<br><br>
 
----
+### 🎯 목표
 
-## 🎯 목표
-
-- 단일 데이터 한계 극복
-- 차트 이미지 + 시계열 + 뉴스 텍스트 통합
-- 더 정확한 예측
+- 단일 모달리티 한계 극복
+- 차트 이미지 + 시계열 + 뉴스 텍스트 통합 시스템 구축
+- 미국 S&P 500 종목 주가 대상
 - 실시간 의사결정 지원
 - 자동 매매 연계
-
----
+<br><br>
 
 ## 핵심 컴포넌트
 
@@ -58,39 +61,14 @@
     ```shell
   .
   ├── README.md
-  ├── cnn
-  │   ├── CNN_PY.py
-  │   ├── image_dataset.ipynb
-  │   └── image_model.ipynb
-  ├── data
-  │   ├── completed_symbols_h5.txt
-  │   ├── csv
-  │   │   ├── MLP_sp500_2.csv
-  │   │   ├── MLP_sp500_final.csv
-  │   │   └── oneDay_predictedPrices.csv
-  │   └── failed_symobls_h5.txt
-  ├── lstm
-  │   ├── LSTM_PY.py
-  │   ├── all_ticker_LSTM_save.ipynb
-  │   └── all_ticker_LSTM_usage.ipynb
-  ├── mlp
-  │   └── multi_modal.ipynb
-  ├── model
-  │   ├── LSTM_MODEL_H5_WIN
-  │   ├── MLP_X_scaler_3.joblib
-  │   ├── MLP_model_3.h5
-  │   └── MLP_y_scaler_3.joblib
+  ├── cnn             차트 이미지 데이터셋 구축, cnn 모델 학습
+  ├── data            csv, 데이터셋 저장
+  ├── lstm            시계열 데이터셋 구축, lstm 모델 학습
+  ├── mlp             mlp 데이터셋 구축
+  ├── model           모델 저장
   └── service
-      ├── backend
-      │   ├── auto_trade.py
-      │   ├── config.yaml
-      │   ├── main_backend.py
-      │   └── one_day.ipynb
+      ├── backend      
       └── frontend
-          ├── AutoTrading
-          ├── AutoTrading.xcodeproj
-          ├── AutoTradingTests
-          └── AutoTradingUITests
     ```
 
 ---
@@ -114,7 +92,7 @@
   > → 저수준~고수준 특징만 추출, 과적합 방지, 효율성 확보
   
   > Q. 이미지 크기 왜 224x224?  
-  > → 딥러닝 표준, 정보손실 최소화, 연산 효율성 균형
+  > → 딥러닝 표준, 정보손실 최소화, 연산 효율성 균형 - Softmax 대신 Sigmoid 사용 → 이진 분류(상승/하락)
 
 - 결과 <br><br>
   <img width="603" height="321" alt="image" src="https://github.com/user-attachments/assets/668fff58-7edc-43cf-9038-9730941b37ca" />
