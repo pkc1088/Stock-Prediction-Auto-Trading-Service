@@ -150,8 +150,8 @@
 - **결과** <br><br>
   <!--<img width="781" height="326" alt="image" src="https://github.com/user-attachments/assets/980f9703-c22f-4203-bdc9-8836c47f2041" /><br><br>-->
 <div align="center">
- <img width="500" height="430" alt="image" src="https://github.com/user-attachments/assets/b27c8c95-275e-4aaf-aef5-a4d8641c5b1c" />
- <img width="482" height="410" alt="image" src="https://github.com/user-attachments/assets/787ac526-c90e-4820-a41d-f3d0b61a0d3c" />
+ <img width="400" height="430" alt="image" src="https://github.com/user-attachments/assets/b27c8c95-275e-4aaf-aef5-a4d8641c5b1c" />
+ <img width="382" height="410" alt="image" src="https://github.com/user-attachments/assets/787ac526-c90e-4820-a41d-f3d0b61a0d3c" />
 </div><br>
 
   - 테스트 셋 sMAPE: **1.97%**
