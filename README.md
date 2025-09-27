@@ -3,7 +3,10 @@
 본 프로젝트는 이미지, 시계열, 텍스트 데이터를 통합하여 종목별 주가를 예측하는 **멀티모달 예측 시스템**이다.<br>
 단일 모달 한계를 극복하고, 다양한 데이터의 조합을 통해 정확도 높은 주가 예측 및 자동 매매를 목표로 한다.
 <br><br>
-![졸업과제 포스터](https://github.com/user-attachments/assets/e01ed946-003e-4b98-b973-56721fe652fb)
+<!--![졸업과제 포스터](https://github.com/user-attachments/assets/e01ed946-003e-4b98-b973-56721fe652fb) -->
+<div align="center">
+ <img width="890" height="1153" alt="image" src="https://github.com/user-attachments/assets/7e063d9b-25d5-40e3-8ae2-0f6f6e947007" />
+</div>
 
 ---
 
@@ -66,9 +69,10 @@
 <br><br>
 
 ### 🔁 전체 데이터 흐름 (DFD)
-
-<img width="2008" height="1005" alt="image" src="https://github.com/user-attachments/assets/4e880d0c-c2b9-4f6a-9cf8-1ccac4f06c1a" />
-
+<!-- <img width="2008" height="1005" alt="image" src="https://github.com/user-attachments/assets/4e880d0c-c2b9-4f6a-9cf8-1ccac4f06c1a" /> -->
+<div align="center">
+ <img width="950" height="600" alt="image" src="https://github.com/user-attachments/assets/4105cfd8-5563-4cb2-965c-b3e19fd32687" />
+</div>
 
 ---
 
@@ -141,12 +145,18 @@
 - **입력**: `[LSTM 예측값, CNN 확률값, 전일 종가]`
 - **출력**: `예측 종가` 
 - **모델 구조**: Dense 3층 + 활성화 함수(ReLU) + Early Stopping
-- **평가 지표**: sMAPE, R²<br><br>
+- **평가 지표**: sMAPE, MSE<br><br>
 
 - **결과** <br><br>
-  <img width="781" height="326" alt="image" src="https://github.com/user-attachments/assets/980f9703-c22f-4203-bdc9-8836c47f2041" /><br><br>
-  - 테스트 셋 sMAPE: **2.54%** → LSTM 단독 대비 **35% 개선**
-  - R²: 0.996
+  <!--<img width="781" height="326" alt="image" src="https://github.com/user-attachments/assets/980f9703-c22f-4203-bdc9-8836c47f2041" /><br><br>-->
+<div align="center">
+ <img width="500" height="430" alt="image" src="https://github.com/user-attachments/assets/b27c8c95-275e-4aaf-aef5-a4d8641c5b1c" />
+ <img width="482" height="410" alt="image" src="https://github.com/user-attachments/assets/787ac526-c90e-4820-a41d-f3d0b61a0d3c" />
+</div><br>
+
+  - 테스트 셋 sMAPE: **1.97%**
+
+  - 단일 모델 LSTM 종목 평균 sMAPE(3.92%) 대비 **49.74% 개선**
 
 <br><br>
   > Q. 왜 Late Fusion?  
@@ -205,13 +215,15 @@
   |------------------|---------------|--------------|
   | LSTM        | sMAPE 종목 평균    | **3.92%**    |
   | CNN  | 정확도 / AUC | 81.4% / 0.83  |
-  | 멀티모달 MLP     | sMAPE     | **2.54%**    |
+  | 멀티모달 MLP     | sMAPE     | **1.97%**    |
 <br>
 
 - 개선된 사항<br><br>
-<img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/108ec663-f5c1-4706-8bd7-fe37c5e4c75c" /><br><br>
+<img width="400" height="400" alt="FinalResultComparison" src="https://github.com/user-attachments/assets/fe4c6456-611c-4f66-a94a-ee436f1941eb" /><br><br>
   - 각 단일 모델도 신뢰할만한 지표를 가지도록 설계
-  - 더불어 멀티모달 모델로 결합될 때 예측의 정확도와 신뢰도가 유의미하게 상승
+
+  - 더불어 멀티모달 모델로 결합될 때 예측의 정확도와 신뢰도가 유의미하게 상승(**49.74% 개선**)
+
   - 향후 상용화된 투자 지원 시스템으로 발전시킬 수 있는 기반 확보 
 
 ---
